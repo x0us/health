@@ -580,7 +580,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div data-load-hero-bg="" class="flex justify-center items-end absolute inset-0">
-                                    <div style="background-image:url(https://www.owreco.com/assets/1080-BkIjQVd-.jpg)" class="bg-center bg-repeat w-full h-full absolute"></div>
+                                    <div style="background-image:url(assets/1080.jpg)" class="bg-center bg-repeat w-full h-full absolute"></div>
                                     <img loading="eager" src="" class="hero-img is-height" />
                                     <div class="hero_grad is-black"></div>
                                     <div class="hero_grad is-white"></div>
