@@ -1,0 +1,91 @@
+/* global.css */
+@font-face {
+    font-family: 'MiSans';
+    src:
+      local('MiSans-Thin'),
+      url('./assets/fonts/MiSans-Thin.woff2') format('woff2'),
+      url('./assets/fonts/MiSans-Thin.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'MiSans';
+    src:
+      local('MiSans-Regular'),
+      url('./assets/fonts/MiSans-Regular.woff2') format('woff2'),
+      url('./assets/fonts/MiSans-Regular.woff') format('woff');
+    font-weight: 400;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'MiSans';
+    src:
+      local('MiSans-Medium'),
+      url('./assets/fonts/MiSans-Medium.woff2') format('woff2'),
+      url('./assets/fonts/MiSans-Medium.woff') format('woff');
+    font-weight: 600;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'MiSans';
+    src:
+      local('MiSans-Bold'),
+      url('./assets/fonts/MiSans-Bold.woff') format('woff');
+    font-weight: 900;
+    font-display: swap;
+  }
+  
+  * {
+    font-family: 'MiSans', 'Outfit', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Reset specific elements if needed */
+  ol, ul {
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit; /* Ensure links don't have default color */
+  }
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  html, body {
+    font-size: 16px;
+    height: 100%;
+    width: 100%;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.dashes {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(to right, currentColor, currentColor 5px, /* dash width */ transparent 5px, /* space between */ transparent 10px /* space width */)
+}
+
+.loader{display: flex;}
+[data-load-bottom]{ opacity: 0; transform:translate(0px , 50%)}
+[data-load-logo]{opacity: 0;}
+[data-load-hero]{width: 2.4vw; height: 1.2vw; opacity: 0;}
+[data-load-hero-img]{width: 100vw; height: 100vh;}
+[data-load-hero-overlay]{opacity: 1;}
+[data-load-placeholder]{opacity: 0; transform:translate(0px , 50%);}
