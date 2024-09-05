@@ -1,6 +1,7 @@
 import SVGLogo from '../logo';
 import Wechat from '../assets/wechat.svg';
 import Douyin from '../assets/douyin.svg';
+import backgroundImage from '../assets/1080.jpg';
 import { onMount, createSignal } from "solid-js";
 
 
@@ -536,7 +537,7 @@ export default function Home() {
             </div>
         </div>
         <div class="page" style="overflow-x: clip">
-          <div id="hero" class="z-2 flex justify-center items-center h-screen p-0 w-full relative overflow-hidden">
+          <div id="hero" class="z-2 flex justify-center items-center min-h-100svh h-100svh lg:h-screen p-0 w-full relative overflow-hidden">
             <div data-load-hero="" class="flex justify-center items-center w-full h-full relative overflow-hidden transform-none">
                 <div class="text-secondary-900 w-screen h-screen absolute">
                     <div role="list" class="w-full h-full">
@@ -580,7 +581,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div data-load-hero-bg="" class="flex justify-center items-end absolute inset-0">
-                                    <div style="background-image:url(assets/1080.jpg)" class="bg-center bg-repeat w-full h-full absolute"></div>
+                                    <div style={`background-image: url(${backgroundImage})`} class="bg-center bg-repeat w-full h-full absolute"></div>
                                     <img loading="eager" src="" class="hero-img is-height" />
                                     <div class="hero_grad is-black"></div>
                                     <div class="hero_grad is-white"></div>
