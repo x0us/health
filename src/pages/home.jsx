@@ -297,7 +297,6 @@ const initNav = (menuWrapper, navWrapper, navTrigger) => {
     });
 
 };
-
 //
 // –––––– MARQUEES
 //
@@ -361,12 +360,13 @@ const initMarquees = () => {
       )
       .fromTo(
         marqueeLetters,
-        { x: "300%", opacity: 1 },
+        { x: "300%", opacity: 1, fontWeight: 400},
         {
           x: "0%",
           opacity: 1,
           //ease: "power2.out",
           duration: 1,
+          fontWeight: 800,
           stagger: { each: 0.05 },
         },
         0,
@@ -437,6 +437,7 @@ export default function Home() {
                 display: "none"
             }),     
             initNav(menuWrapper, navWrapper, navTrigger);
+            initMarquees()
           }
     })).to(loaderBottomItems, {
         opacity: 1,
@@ -734,7 +735,7 @@ export default function Home() {
                   <div class="cell_split-2">
                     <div class="cell_block">
                     <div class="cell_img is-height">
-                      <img alt="" src="/src/assets/imgs/nordwood-themes-UI-unsplash-small.jpg" class="img is-height" />
+                      <img alt="" src="/src/assets/imgs/jennifer-schmidt-unsplash-small.jpg" class="img is-height" />
                     </div>
                     </div>
                     <div class="cell_block up-right">
@@ -815,6 +816,61 @@ export default function Home() {
                 </div></a>
                 <link rel="prefetch" href="/contact" />
               </div>
+              </div>
+            </div>
+            <div class="marquee">
+              <div class="marquee-bg">
+              <div class="marquee-bg__panel is--1"></div>
+              <div class="marquee-bg__panel is--2"></div>
+              <div class="marquee-bg__panel is--3"></div>
+              <div class="marquee-bg__panel is--4"></div>
+              <div class="marquee-bg__panel is--5"></div>
+              <div class="marquee-bg__panel is--6"></div>
+              </div>
+              <div class="marquee-inner">
+              <div class="marquee-panel">
+                <div data-split-text="" class="marquee_text">
+                无污染
+                </div>
+                <div data-split-text="" class="marquee_text">
+                -
+                </div>
+                <div data-split-text="" class="marquee_text">
+                生活方式
+                </div>
+                <div data-split-text="">
+                -
+                </div>
+              </div>
+              <div class="marquee-panel">
+                <div data-split-text="">
+                无污染
+                </div>
+                <div data-split-text="">
+                -
+                </div>
+                <div data-split-text="">
+                生活方式
+                </div>
+                <div data-split-text="">
+                -
+                </div>
+              </div>
+              </div>
+            </div>                
+          </div>
+          <div class="section is-category is-white">
+            <div class="gap-1vw flex">
+              <div class="bd_category w-inline-block">
+                <div class="gap-.3vw flex">
+                  <h5 class="h-h5">Introductions</h5>
+                  <div class="bd_category-count">
+                    <div class="body_17">(01)</div>
+                  </div>
+                </div>
+                <div class="absolute top-auto right-1.5vw bottom-1vw left-auto">
+                  <div class="text-size-3xl font-800">01 无污染生活方式</div>
+                </div>
               </div>
             </div>
           </div>
