@@ -3,8 +3,6 @@ import Wechat from '../assets/wechat.svg';
 import Douyin from '../assets/douyin.svg';
 import backgroundImage from '../assets/1080.jpg';
 import { onMount, createSignal } from "solid-js";
-
-
 //
 // –––––– NAV STATES
 //
@@ -300,8 +298,101 @@ const initNav = (menuWrapper, navWrapper, navTrigger) => {
 
 };
 
+//
+// –––––– MARQUEES
+//
+const initMarquees = () => {
+  function splitMarqueeText() {
+    let marqueeSplit = new SplitType("[data-split-text]", {
+      types: "words, chars",
+    });
+  }
+  splitMarqueeText();
+
+  // ————— MARQUEE
+  const marqueeLoop = gsap.timeline({
+    repeat: -1,
+    paused: true,
+    onComplete: () => {
+      gsap.set(".marquee-panel", { xPercent: 0 });
+    },
+  });
+  marqueeLoop.to(".marquee-panel", {
+    xPercent: -100,
+    duration: 40,
+    ease: "none",
+  });
+
+  gsap.utils.toArray(".marquee").forEach((section, index) => {
+    const marqueePanels = section.querySelectorAll(".marquee-bg__panel");
+    let marqueeLetters = section.querySelectorAll(".char");
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top bottom",
+      end: "bottom top",
+      onEnter: () => marqueeLoop.play(),
+      onEnterBack: () => marqueeLoop.play(),
+    });
+
+    const marqueeIntro = gsap.timeline({
+      paused: true,
+      defaults: {
+        ease: "expo.out",
+        duration: 1.5,
+      },
+      onStart: () => marqueeLoop.play(),
+    });
+
+    marqueeIntro
+      .to(marqueePanels, {
+        scale: 1.05,
+        x: 0,
+        overwrite: true,
+        stagger: { each: 0.01 },
+      })
+      .to(
+        ".marquee-bg",
+        {
+          scale: 1,
+          x: "0%",
+        },
+        0,
+      )
+      .fromTo(
+        marqueeLetters,
+        { x: "300%", opacity: 1 },
+        {
+          x: "0%",
+          opacity: 1,
+          //ease: "power2.out",
+          duration: 1,
+          stagger: { each: 0.05 },
+        },
+        0,
+      );
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 85%",
+      markers: false,
+      onEnter: () => marqueeIntro.play(),
+    });
+  });
+};
+
+
 export default function Home() {
+
+    const urlsTop = [
+      {poster: '/src/assets/imgs/s1.jpg',  url: '/src/assets/videos/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
+      {poster: '/src/assets/imgs/s3.jpg',  url: '/src/assets/videos/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
+      {poster: '/src/assets/imgs/s2.jpg',  url: '/src/assets/videos/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
+    ]
+  
     const [isMenuOpen, setIsMenuOpen] = createSignal(false);
+    const [activeIndex, setActiveIndex] = createSignal(null);
+
     let menuWrapper;
     let navWrapper;
     let navTrigger;
@@ -455,6 +546,13 @@ export default function Home() {
         // lenis.start()
       }
   }, ">-=0.6");
+
+
+  //init video
+      // Initialize Plyr for all video tags
+      document.querySelectorAll('video').forEach(video => {
+        new Plyr(video, {});
+      });
   })
 
     return (
@@ -594,6 +692,130 @@ export default function Home() {
                     </div>
                 </div>
                 <div data-load-hero-overlay="" class="z-3 opacity-0 pointer-events-none bg-black w-full h-full absolute inset-0"></div>
+            </div>
+          </div>
+          <div class="z-2 justify-center items-center w-full p-[.5vw_2vw_1vw] relative overflow-hidden">
+            <div class="three-col_wrap w-dyn-list">
+              <div role="list" class="three-col_list w-dyn-items">
+              {urlsTop.map((item, index) => (
+                <div role="listitem" class="three-col_item w-dyn-item"  classList={{ "is--active": activeIndex() === index }}
+                onMouseEnter={() => setActiveIndex(index)}
+                onMouseLeave={() => setActiveIndex(null)}>
+                    <a  class="border-1 border-dashed border-black rounded-2.5 flex flex-col justify-end items-stretch w-full h-40vw ml-0.5vw mr-0.5vw relative overflow-hidden">
+                      <img class='w-full h-full inset-0' />
+                      <div class="vid-wrap is--wide three-col">
+                          <video crossorigin playsinline data-poster={item.poster}>
+                            <source src={item.url} type="video/mp4" />
+                          </video>
+                      </div>
+                      <div class="three-col__content">
+                        <div class="flex-v gap-xs">
+                          <h5 class="h-h4 is-white">{item.title}</h5>
+                          <div class="div-block-80">
+                            <h6 class="eyebrow_14 is-white">{item.subtitle}</h6>
+                          </div>
+                        </div>
+                        <div class="flex-h gap-s">
+                          <img src="/src/assets/arrow.svg" loading="lazy" alt="arrow up right" class="three-col__link-img"/>
+                        </div>
+                      </div>
+                    </a>
+                </div>))}
+              </div>
+            </div>
+          </div>
+          <div class="section grid-wrap is-white is-2">
+            <div class="cell_container">
+              <div class="cell_inner is-left">
+              <div class="cell_list-wrap w-dyn-list">
+                <div role="list" class="cell_list-list w-dyn-items">
+                <div role="listitem" class="cell_list-item show--o w-dyn-item">
+                  <div class="cell_bleed-2">
+                  <div class="cell_split-2">
+                    <div class="cell_block">
+                    <div class="cell_img is-height">
+                      <img alt="" src="/src/assets/imgs/nordwood-themes-UI-unsplash-small.jpg" class="img is-height" />
+                    </div>
+                    </div>
+                    <div class="cell_block up-right">
+                    <div class="cell_eyebrow">
+                      <div class="eyebrow_14-4">
+                      <strong>FEATURED</strong>
+                      </div>
+                    </div>
+                    <div class="cell_h4">
+                      <h4 class="h-h4 is-big">无污染<br/><span class='text-xs'>生 | 活 | 方 | 式</span></h4>
+                    </div>
+                    <div class="cell_text-2">
+                      <div class="body_17">
+                        无污染生活方式创立发起人
+                      <br />
+                      <br />
+                      <br />蔡明希
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="qv_wrap">
+                    <div class="qv_item">
+                      <div class="cell_content">
+                        <div class="cell_img-wrap">
+                          <img class='w-full' src="/src/assets/imgs/lily-banse-YHS-unsplash-small.jpg" />
+                        </div>
+                        <div class="cell_gradient"></div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+              </div>
+              <div class="cell_inner is-right">
+              <div class="cell_desc-wrap">
+                <div class="cell_desc-eyebrow">
+                <div class="eyebrow_22-5">
+                  我们的愿景
+                </div>
+                </div>
+                <div class="cell_desc-row">
+                <div class="cell_slant">
+                  <div class="slant-7">
+                  拥抱
+                  </div>
+                </div>
+                <div class="cell_des">
+                  <h2 class="h-h2">无污染生活方式<br /></h2>
+                </div>
+                <div class="cell_slant is-right">
+                  <div class="slant-7">
+                  让
+                  </div>
+                </div>
+                </div>
+                <div class="cell_desc-row">
+                <div class="cell_desc-row">
+                  <h2 class="h-h2">自然的力量成为你日常的一部分</h2>
+                </div>
+                </div>
+              </div>
+              <div class="cell_desc-text-2">
+                <h6 class="h-h6">选择绿色出行、使用环保产品，减少对环境的负担，为自己和地球创造一个更加清新的未来。享受来自大自然的纯净空气、清澈水源和天然食材，每一次呼吸都充满健康的力量。用行动保护环境、呵护自己，从今天开始，让无污染的生活方式成为你的新常态，为未来带来更多希望和美好。.</h6>
+              </div>
+              <div class="m-top m--small">
+                <a href="/contact" class="cta_link w-inline-block">
+                <div class="cta_text">
+                  <div class="eyebrow_14">
+                  加入我们
+                  </div>
+                  <div class="dashes"></div>
+                </div>
+                <div class="cta_link-img">
+                  <img src="https://cdn.prod.website-files.com/64e6091972f5864e5b3e6f9e/64edd978897bcddbe2c60806_arrow_black.svg" loading="lazy" alt="arrow right" class="img w-[30px]" />
+                </div></a>
+                <link rel="prefetch" href="/contact" />
+              </div>
+              </div>
             </div>
           </div>
         </div>
