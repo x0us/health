@@ -23,6 +23,8 @@ function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(String(email).toLowerCase())
 }
+
+
 // ————— LENIS
 "use strict";
 let lenis;
@@ -885,7 +887,7 @@ export default function Home() {
                 <div data-load-hero-overlay="" class="z-3 opacity-0 pointer-events-none bg-black w-full h-full absolute inset-0"></div>
             </div>
           </div>
-          <div class="w-full mx-auto p-4">
+          <div class="w-full mx-auto p-4 mt-10">
             <div class="flex gap-4 mb-4 h-[40vw]">
             {urlsTop.map((item, index) => (
               <div class='flex-1 transition-all duration-300 ease-in-out relative' classList={{ "flex-grow-[2]": activeIndex() === index }}
@@ -896,7 +898,7 @@ export default function Home() {
                   <video crossorigin playsinline data-poster={item.poster} className="w-full h-full object-cover">
                     <source src={item.url} type="video/mp4" />
                   </video>
-                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black to-transparent h-1/5 flex flex-col justify-end p-4">
+                  <div class="hidden sm:absolute sm:inset-x-0 sm:bottom-0 sm:bg-gradient-to-t sm: from-black sm:to-transparent sm:h-1/5 sm:flex sm:flex-col sm:justify-end sm:p-4">
                     <h3 className="text-white text-xl font-bold mb-2">{item.title}</h3>
                     <p className="text-white text-sm">{item.subtitle}</p>
                   </div>
