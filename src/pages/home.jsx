@@ -385,15 +385,16 @@ const initMarquees = () => {
 export default function Home() {
 
     const urlsTop = [
-      {poster: '/src/assets/imgs/s1.jpg',  url: '/src/assets/videos/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
-      {poster: '/src/assets/imgs/s3.jpg',  url: '/src/assets/videos/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
-      {poster: '/src/assets/imgs/s2.jpg',  url: '/src/assets/videos/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
+      {poster: '/src/assets/imgs/s1.jpg',  url: 'https://videos.owreco.com/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
+      {poster: '/src/assets/imgs/s3.jpg',  url: 'https://videos.owreco.com/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
+      {poster: '/src/assets/imgs/s2.jpg',  url: 'https://videos.owreco.com/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
     ]
   
     const [isMenuOpen, setIsMenuOpen] = createSignal(false);
     const [activeIndex, setActiveIndex] = createSignal(null);
 
     let menuWrapper;
+    let buttonRef;
     let navWrapper;
     let navTrigger;
   
@@ -552,12 +553,23 @@ export default function Home() {
   //init video
       // Initialize Plyr for all video tags
       document.querySelectorAll('video').forEach(video => {
-        new Plyr(video, {});
+        new Plyr(video, { controls: []});
       });
+      
+    if (buttonRef) {
+      const text = new SplitType(buttonRef.querySelector('.button-text'), { types: 'chars' });
+      const chars = text.chars;
+
+      chars.forEach((char, index) => {
+        char.style.setProperty('--delay', `${index * 0.05}s`);
+      });
+    }
+    
+
   })
 
     return (
-        <>
+       <>
         <div fullscreen="true" mode="light" class="z-99 pointer-events-none flex flex-row justify-between items-center w-full p-4 fixed inset-x-0 top-0" ref={navWrapper}>
             <div class="navbar_inner pointer-events-auto text-secondary-900 border-dashed border rounded-[.9vw] flex flex-row justify-between items-center w-full h-[8vh] px-6 border-color-[currentColor]">
                 <a aria-label="home" href="/" aria-current="page" class="w-[4.9rem] relative max-w-full inline-block">
@@ -695,129 +707,77 @@ export default function Home() {
                 <div data-load-hero-overlay="" class="z-3 opacity-0 pointer-events-none bg-black w-full h-full absolute inset-0"></div>
             </div>
           </div>
-          <div class="z-2 justify-center items-center w-full p-[.5vw_2vw_1vw] relative overflow-hidden">
-            <div class="three-col_wrap w-dyn-list">
-              <div role="list" class="three-col_list w-dyn-items">
-              {urlsTop.map((item, index) => (
-                <div role="listitem" class="three-col_item w-dyn-item"  classList={{ "is--active": activeIndex() === index }}
-                onMouseEnter={() => setActiveIndex(index)}
-                onMouseLeave={() => setActiveIndex(null)}>
-                    <a  class="border-1 border-dashed border-black rounded-2.5 flex flex-col justify-end items-stretch w-full h-40vw ml-0.5vw mr-0.5vw relative overflow-hidden">
-                      <img class='w-full h-full inset-0' />
-                      <div class="vid-wrap is--wide three-col">
-                          <video crossorigin playsinline data-poster={item.poster}>
-                            <source src={item.url} type="video/mp4" />
-                          </video>
-                      </div>
-                      <div class="three-col__content">
-                        <div class="flex-v gap-xs">
-                          <h5 class="h-h4 is-white">{item.title}</h5>
-                          <div class="div-block-80">
-                            <h6 class="eyebrow_14 is-white">{item.subtitle}</h6>
-                          </div>
-                        </div>
-                        <div class="flex-h gap-s">
-                          <img src="/src/assets/arrow.svg" loading="lazy" alt="arrow up right" class="three-col__link-img"/>
-                        </div>
-                      </div>
-                    </a>
-                </div>))}
+          <div class="w-full mx-auto p-4">
+            <div class="flex gap-4 mb-4 h-[40vw]">
+            {urlsTop.map((item, index) => (
+              <div class='flex-1 transition-all duration-300 ease-in-out relative' classList={{ "flex-grow-[2]": activeIndex() === index }}
+              onMouseEnter={() => setActiveIndex(index)}
+              onMouseLeave={() => setActiveIndex(null)}
+              >
+                <div class='border border-dashed border-secondary-900 border-1 rounded flex flex-col justify-end items-stretch absolute inset-0 overflow-hidden rounded-xl'>
+                  <video crossorigin playsinline data-poster={item.poster} className="w-full h-full object-cover">
+                    <source src={item.url} type="video/mp4" />
+                  </video>
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black to-transparent h-1/5 flex flex-col justify-end p-4">
+                    <h3 className="text-white text-xl font-bold mb-2">{item.title}</h3>
+                    <p className="text-white text-sm">{item.subtitle}</p>
+                  </div>
+                </div>
+              </div>
+              ))}
+            </div>
+          </div>
+          <div className="w-full mx-auto p-4">
+            <div className="flex flex-col md:flex-row h-auto md:h-[95vh]">
+              {/* Left side - 40% width on medium screens and above */}
+              <div className="w-full md:w-2/5 flex flex-col mt-4 md:mt-0">
+                {/* Top section with two divs */}
+                <div className="flex flex-col md:flex-row mb-4 h-1/2">
+                  <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex-1 rounded-lg min-h-[200px]">
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/jennifer-schmidt-unsplash-small.jpg"/>
+                  </div>
+                  <div className="border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
+                    <p className="text-base font-900 text-secondary-900">FEATURED</p>
+                    <br/>
+                    <h2 className="text-2xl font-bold mb-2">无污染</h2>
+                    <h3 className="text-base mb-4 tracking-widest">生<span class='text-xs'>|</span>活<span class='text-xs'>|</span>方<span class='text-xs'>|</span>式</h3>
+                    <p className="text-sm">无污染生活方式创立发起人</p>
+                    <br/>
+                    <p className="text-base tracking-wider font-900">蔡明希</p>
+                  </div>
+                </div>
+                {/* Bottom section with one div */}
+                <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg min-h-[200px]">
+                  {/* Placeholder for image */}
+                  <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/lily-banse-YHS-unsplash-small.jpg"/>
+                </div>
+              </div>
+
+              {/* Right side - 60% width on medium screens and above */}
+              <div className="w-full md:w-3/5 mt-4 md:mt-0 md:ml-4 border border-dashed border-secondary-900 flex flex-col justify-center items-center text-center rounded-lg">
+                <h2 className="text-sm font-bold mb-4">我们的愿景</h2>
+                <br/>
+                <br/>
+                <p className="text-sm font-bold mb-4">
+                &nbsp;&nbsp;拥抱&nbsp;&nbsp;<span className="text-secondary-600 text-3xl font-900">无污染生活方式</span>&nbsp;&nbsp;让&nbsp;&nbsp;
+                </p>
+                <p className="text-3xl font-bold mb-8">自然的力量成为你日常的一部分</p>
+                <p className="text-sm mb-8 px-[5vw]">
+                  选择绿色出行、使用环保产品、减少对环境的负担。为自己和地球创造一个更加清洁的未来。享受来自大自然的纯净空气、清澈水源和天然食材。每一次呼吸都充满健康的力量。坚持环保护环境、呵护自己，从今天开始，让无污染的生活方式成为你的新常态，为未来带来更多希望和美好。
+                </p>
+                <button
+                ref={buttonRef} 
+                className="bg-green-600 text-white py-2 px-4 rounded-full inline-flex items-center group">
+                  <span className="sr-only">加入我们</span>
+                  <span aria-hidden="true" className="button-text">加入我们</span>
+                  <svg className="w-4 h-4 ml-2 transition-colors duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
-          <div class="section grid-wrap is-white is-2">
-            <div class="cell_container">
-              <div class="cell_inner is-left">
-              <div class="cell_list-wrap w-dyn-list">
-                <div role="list" class="cell_list-list w-dyn-items">
-                <div role="listitem" class="cell_list-item show--o w-dyn-item">
-                  <div class="cell_bleed-2">
-                  <div class="cell_split-2">
-                    <div class="cell_block">
-                    <div class="cell_img is-height">
-                      <img alt="" src="/src/assets/imgs/jennifer-schmidt-unsplash-small.jpg" class="img is-height" />
-                    </div>
-                    </div>
-                    <div class="cell_block up-right">
-                    <div class="cell_eyebrow">
-                      <div class="eyebrow_14-4">
-                      <strong>FEATURED</strong>
-                      </div>
-                    </div>
-                    <div class="cell_h4">
-                      <h4 class="h-h4 is-big">无污染<br/><span class='text-xs'>生 | 活 | 方 | 式</span></h4>
-                    </div>
-                    <div class="cell_text-2">
-                      <div class="body_17">
-                        无污染生活方式创立发起人
-                      <br />
-                      <br />
-                      <br />蔡明希
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                  <div class="qv_wrap">
-                    <div class="qv_item">
-                      <div class="cell_content">
-                        <div class="cell_img-wrap">
-                          <img class='w-full' src="/src/assets/imgs/lily-banse-YHS-unsplash-small.jpg" />
-                        </div>
-                        <div class="cell_gradient"></div>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-              </div>
-              <div class="cell_inner is-right">
-              <div class="cell_desc-wrap">
-                <div class="cell_desc-eyebrow">
-                <div class="eyebrow_22-5">
-                  我们的愿景
-                </div>
-                </div>
-                <div class="cell_desc-row">
-                <div class="cell_slant">
-                  <div class="slant-7">
-                  拥抱
-                  </div>
-                </div>
-                <div class="cell_des">
-                  <h2 class="h-h2">无污染生活方式<br /></h2>
-                </div>
-                <div class="cell_slant is-right">
-                  <div class="slant-7">
-                  让
-                  </div>
-                </div>
-                </div>
-                <div class="cell_desc-row">
-                <div class="cell_desc-row">
-                  <h2 class="h-h2">自然的力量成为你日常的一部分</h2>
-                </div>
-                </div>
-              </div>
-              <div class="cell_desc-text-2">
-                <h6 class="h-h6">选择绿色出行、使用环保产品，减少对环境的负担，为自己和地球创造一个更加清新的未来。享受来自大自然的纯净空气、清澈水源和天然食材，每一次呼吸都充满健康的力量。用行动保护环境、呵护自己，从今天开始，让无污染的生活方式成为你的新常态，为未来带来更多希望和美好。.</h6>
-              </div>
-              <div class="m-top m--small">
-                <a href="/contact" class="cta_link w-inline-block">
-                <div class="cta_text">
-                  <div class="eyebrow_14">
-                  加入我们
-                  </div>
-                  <div class="dashes"></div>
-                </div>
-                <div class="cta_link-img">
-                  <img src="https://cdn.prod.website-files.com/64e6091972f5864e5b3e6f9e/64edd978897bcddbe2c60806_arrow_black.svg" loading="lazy" alt="arrow right" class="img w-[30px]" />
-                </div></a>
-                <link rel="prefetch" href="/contact" />
-              </div>
-              </div>
-            </div>
+          <div class="w-full mx-auto p-4">
             <div class="marquee">
               <div class="marquee-bg">
               <div class="marquee-bg__panel is--1"></div>
@@ -857,23 +817,203 @@ export default function Home() {
                 </div>
               </div>
               </div>
-            </div>                
+            </div>  
+          </div>                
+          <div className="w-full mx-auto p-4 h-42">
+            <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full">
+              <div className="flex items-center justify-between h-full">
+                <div className="flex items-center">
+                  <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
+                  <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(01)</span>
+                </div>
+                <span className="text-base md:text-3xl text-secondary-900 font-800"><span class="text-9xl font-900 tracking-tighter">01</span>&nbsp;无污染生活</span>
+              </div>
+            </div>            
           </div>
-          <div class="section is-category is-white">
-            <div class="gap-1vw flex">
-              <div class="bd_category w-inline-block">
-                <div class="gap-.3vw flex">
-                  <h5 class="h-h5">Introductions</h5>
-                  <div class="bd_category-count">
-                    <div class="body_17">(01)</div>
+          <div className="w-full mx-auto p-4">
+            <div className="flex flex-col md:flex-row h-auto md:h-[95vh]">
+              <div className="w-full md:w-1/2 mt-4 md:mt-0 border border-dashed border-secondary-900 flex flex-col justify-center items-center text-center rounded-lg relative min-h-[200px]">
+                <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/sport01.jpg"/>
+              </div>
+              <div className="w-full md:w-1/2 flex flex-col mt-4 md:mt-0 md:ml-4">
+                <div className="flex flex-col md:flex-row mb-4 h-1/2">
+                  <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
+                    <p className="text-base font-900 text-secondary-900">Step 1</p>
+                      <br/>
+                      <h2 className="text-2xl font-bold mb-2">无污染生活方式</h2>
+                      <p className="text-sm px-8">选择绿色出行、使用环保产品，减少对环境的负担，为自己和地球创造一个更加清新的未来。享受来自大自然的纯净空气、清澈水源和天然食材，每一次呼吸都充满健康的力量。用行动保护环境、呵护自己，从今天开始，让无污染的生活方式成为你的新常态，为未来带来更多希望和美好</p>
+                      <br/>
+                  </div>
+                  <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px]">
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/man01.jpg"/>
                   </div>
                 </div>
-                <div class="absolute top-auto right-1.5vw bottom-1vw left-auto">
-                  <div class="text-size-3xl font-800">01 无污染生活方式</div>
+                <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg">
+                  <video crossorigin playsinline autoplay muted loop className="w-full h-full object-cover">
+                    <source src='/src/assets/videos/p4_smaller.mp4' type="video/mp4" />
+                  </video>
                 </div>
               </div>
             </div>
           </div>
+          <div className="w-full mx-auto p-4 h-42">
+            <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full">
+              <div className="flex items-center justify-between h-full">
+                <div className="flex items-center">
+                  <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
+                  <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(02)</span>
+                </div>
+                <span className="text-base md:text-3xl text-secondary-900 font-800"><span class="text-9xl font-900 tracking-tighter">02</span>&nbsp;道法自然</span>
+              </div>
+            </div>            
+          </div>
+          <div className="w-full mx-auto p-4">
+            <div className="flex flex-col md:flex-row h-auto md:h-[95vh]">
+              <div className="w-full md:w-3/5 mt-4 md:mt-0 border border-dashed border-secondary-900  flex flex-col justify-center items-center text-center rounded-lg">
+                <h2 className="text-base font-bold mb-4">Step 2</h2>
+                <br/>
+                <br/>
+                <p className="text-sm font-bold mb-4">
+                &nbsp;&nbsp;感受&nbsp;&nbsp;<span className="text-secondary-600 text-3xl font-900">道法自然 生命至上</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                </p>
+                <p className="text-3xl font-bold mb-8">顺应自然规律，尊重生命的本质，选择低碳环保的生活方式.</p>
+                <p className="text-sm mb-8 px-[5vw]">
+                  从每一个小细节做起。使用环保产品，减少能源消耗，保护我们的生态环境，确保健康生活。让自然的和谐与人类的智慧融合，为自己和后代创造一个更加美丽、健康的地球家园。行动从现在开始，关爱自然，珍惜生命，共同迈向可持续的未来。
+                </p>
+              </div>
+              <div className="w-full md:w-2/5 flex flex-col mt-4 md:mt-0 md:ml-4">
+                <div className="flex flex-col md:flex-row mb-4 h-1/2">
+                  <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px]">
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao02.jpg"/>
+                  </div>
+                  <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
+                    <p className="text-base font-900 text-secondary-900">FEATURED</p>
+                      <br/>
+                      <h2 className="text-2xl font-bold mb-2">无污染</h2>
+                      <h3 className="text-base mb-4 tracking-widest">生<span class='text-xs'>|</span>活<span class='text-xs'>|</span>方<span class='text-xs'>|</span>式</h3>
+                      <p className="text-sm">一朵云摇动另一朵云 一片树叶摇动另一片树叶</p>
+                      <br/>
+                  </div>
+                </div>
+                <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg min-h-[200px]">
+                  <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao01.jpg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full mx-auto p-4 h-42">
+            <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full">
+              <div className="flex items-center justify-between h-full">
+                <div className="flex items-center">
+                  <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
+                  <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(03)</span>
+                </div>
+                <span className="text-xs md:text-3xl text-secondary-900 font-800"><span class="text-9xl font-900 tracking-tighter">03</span>&nbsp;积蓄自然之力</span>
+              </div>
+            </div>            
+          </div>
+          <div className="w-full mx-auto p-4">
+            <div class="marquee">
+              <div class="marquee-bg">
+              <div class="marquee-bg__panel is--1"></div>
+              <div class="marquee-bg__panel is--2"></div>
+              <div class="marquee-bg__panel is--3"></div>
+              <div class="marquee-bg__panel is--4"></div>
+              <div class="marquee-bg__panel is--5"></div>
+              <div class="marquee-bg__panel is--6"></div>
+              </div>
+              <div class="marquee-inner">
+              <div class="marquee-panel">
+                <div data-split-text="" class="marquee_text">
+                积蓄自然之力
+                </div>
+                <div data-split-text="" class="marquee_text">
+                -
+                </div>
+                <div data-split-text="" class="marquee_text">
+                为生命注入健康的能量
+                </div>
+              </div>
+              <div class="marquee-panel">
+                <div data-split-text="">
+                积蓄自然之力
+                </div>
+                <div data-split-text="">
+                -
+                </div>
+                <div data-split-text="">
+                为生命注入健康的能量
+                </div>
+              </div>
+              </div>
+            </div>  
+          </div>
+          <div className="w-full mx-auto p-4">
+            <div className="flex flex-col md:flex-row h-auto md:h-[95vh]">
+              <div className="w-full flex flex-col mt-4 md:mt-0">
+                <div className="flex flex-col md:flex-row mb-4 h-1/2">
+                  <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px] z-2">
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao02.jpg"/>
+                  </div>
+                  <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col flex-1 rounded-lg min-h-[200px] z-2">
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao02.jpg"/>
+                  </div>
+                </div>
+                <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg flex flex-col items-center justify-center text-center flex-1 z-2 bg-primary-500">
+                    <p className="text-base font-900 text-secondary-900">Step 3</p>
+                      <br/>
+                      <h2 className="text-2xl font-bold mb-2">积蓄自然之力 为生命注入健康的能量</h2>
+                      <h3 className="text-base mb-4 tracking-widest">生<span class='text-xs'>|</span>活<span class='text-xs'>|</span>方<span class='text-xs'>|</span>式</h3>
+                      <p className="text-sm">我们将自然的力量融入日常，提升生活质量。保护清新空气、纯净水源和优质土壤，为身体和心灵注入活力。</p>
+                      <p className="text-sm">用行动践行健康理念，减少环境污染，促进生态平衡，让自然的恩赐转化为个人的健康源泉。每一步都是对自己和地球的珍爱，共同开创一个绿色、健康、充满活力的未来。</p>
+                </div>
+              </div>
+            </div>            
+          </div>
+          <div class="pointer-events-none mt-[-50vw]">
+            <div class="relative z-2 h-[50vw] relative z-2"></div>
+            <div class="relative z-0 mix-blend-darken h-[31vw] pt-[5vw] pb-0 sticky bottom-0 z-0">
+            <div class="w-full mx-auto p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                  <h2 className="text-sm font-900 mb-4">SERVICES</h2>
+
+                </div>
+
+                <div>
+                  <h2 className="text-sm mb-4">订阅我们的消息</h2>
+                  <div className="flex items-center b-b b-black pb-2">
+                    <input
+                      type="email"
+                      placeholder="Enter your email address"
+                      className="bg-transparent w-full outline-none text-sm"
+                    />
+                    <button className="ml-2">
+                      
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="text-sm mb-4">SITEMAP</h2>
+                  <ul className="space-y-2">
+                    {['Index', 'Work', 'Team', 'Studio', 'Contact'].map((item) => (
+                      <li key={item} className="b-b b-dotted b-black pb-1">
+                        <a href="#" className="text-sm hover:op-70 transition-opacity">
+                          {item}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
         </div>
         <div class="loader z-101 justify-center items-center w-full h-[100svh] min-h-[100svh] flex fixed inset-0 overflow-hidden">
             <div class="z-2 flex flex-row justify-center items-stretch h-[11vw] relative">
