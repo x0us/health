@@ -2,7 +2,51 @@ import SVGLogo from '../logo';
 import Wechat from '../assets/wechat.svg';
 import Douyin from '../assets/douyin.svg';
 import backgroundImage from '../assets/1080.jpg';
+import dao01 from '../assets/imgs/dao01.jpg';
+import dao02 from '../assets/imgs/dao02.jpg';
+import s1 from '../assets/imgs/s1.jpg';
+import s2 from '../assets/imgs/s2.jpg';
+import s3 from '../assets/imgs/s3.jpg';
+import jennifer from '../assets/imgs/jennifer-schmidt-unsplash-small.jpg';
+import lily from '../assets/imgs/lily-banse-YHS-unsplash-small.jpg';
+import sport01 from '../assets/imgs/sport01.jpg';
+import man01 from '../assets/imgs/man01.jpg';
+import s301 from '../assets/imgs/s301.jpg';
+import s302 from '../assets/imgs/s302.jpg';
+
 import { onMount, createSignal } from "solid-js";
+
+
+
+const { to, fromTo, set } = gsap
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  return re.test(String(email).toLowerCase())
+}
+// ————— LENIS
+"use strict";
+let lenis;
+
+lenis = new Lenis();
+
+
+document.querySelectorAll("[data-lenis-toggle]").forEach((element) => {
+  element.addEventListener("click", function () {
+      this.classList.toggle("stop-scroll");
+      if (this.classList.contains("stop-scroll")) {
+          lenis.stop();
+      } else {
+          lenis.start();
+      }
+  });
+});
+lenis.on('scroll', ScrollTrigger.update)
+
+gsap.ticker.add( (time) => {
+    lenis.raf(time * 1000)
+}
+)
+
 //
 // –––––– NAV STATES
 //
@@ -385,9 +429,9 @@ const initMarquees = () => {
 export default function Home() {
 
     const urlsTop = [
-      {poster: '/src/assets/imgs/s1.jpg',  url: 'https://videos.owreco.com/videos/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
-      {poster: '/src/assets/imgs/s3.jpg',  url: 'https://videos.owreco.com/videos/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
-      {poster: '/src/assets/imgs/s2.jpg',  url: 'https://videos.owreco.com/videos/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
+      {poster: s1,  url: 'https://videos.owreco.com/videos/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
+      {poster: s3,  url: 'https://videos.owreco.com/videos/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
+      {poster: s2,  url: 'https://videos.owreco.com/videos/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
     ]
   
     const [isMenuOpen, setIsMenuOpen] = createSignal(false);
@@ -545,7 +589,7 @@ export default function Home() {
       z: 1,
       ease: "expo.out",
       onStart() {
-        // lenis.start()
+        lenis.start()
       }
   }, ">-=0.6");
 
@@ -564,7 +608,141 @@ export default function Home() {
         char.style.setProperty('--delay', `${index * 0.05}s`);
       });
     }
-    
+
+//form
+    document.querySelectorAll('.newsletter-form').forEach(form => {
+
+      let input = form.querySelector('input'),
+          button = form.querySelector('button'),
+          getVar = variable => getComputedStyle(button).getPropertyValue(variable)
+
+      input.addEventListener('input', e => {
+          form.classList.toggle('valid', validateEmail(input.value))
+      })
+
+      form.addEventListener('submit', e => {
+
+          e.preventDefault()
+
+          if(!validateEmail(input.value)) {
+              input.focus()
+              return
+          }
+
+          if(!button.classList.contains('active')) {
+
+              button.classList.add('active')
+
+              to(button, {
+                  keyframes: [{
+                      '--left-wing-first-x': '50%',
+                      '--left-wing-first-y': '100%',
+                      '--right-wing-second-x': '50%',
+                      '--right-wing-second-y': '100%',
+                      duration: .2,
+                      onComplete() {
+                          set(button, {
+                              '--left-wing-first-y': '0%',
+                              '--left-wing-second-x': '40%',
+                              '--left-wing-second-y': '100%',
+                              '--left-wing-third-x': '0%',
+                              '--left-wing-third-y': '100%',
+                              '--left-body-third-x': '40%',
+                              '--right-wing-first-x': '50%',
+                              '--right-wing-first-y': '0%',
+                              '--right-wing-second-x': '60%',
+                              '--right-wing-second-y': '100%',
+                              '--right-wing-third-x': '100%',
+                              '--right-wing-third-y': '100%',
+                              '--right-body-third-x': '60%'
+                          })
+                      }
+                  }, {
+                      '--left-wing-third-x': '20%',
+                      '--left-wing-third-y': '90%',
+                      '--left-wing-second-y': '90%',
+                      '--left-body-third-y': '90%',
+                      '--right-wing-third-x': '80%',
+                      '--right-wing-third-y': '90%',
+                      '--right-body-third-y': '90%',
+                      '--right-wing-second-y': '90%',
+                      duration: .2
+                  }, {
+                      '--rotate': '50deg',
+                      '--left-wing-third-y': '95%',
+                      '--left-wing-third-x': '27%',
+                      '--right-body-third-x': '45%',
+                      '--right-wing-second-x': '45%',
+                      '--right-wing-third-x': '60%',
+                      '--right-wing-third-y': '83%',
+                      duration: .25
+                  }, {
+                      '--rotate': '60deg',
+                      '--plane-x': '-8px',
+                      '--plane-y': '40px',
+                      duration: .2
+                  }, {
+                      '--rotate': '40deg',
+                      '--plane-x': '45px',
+                      '--plane-y': '-300px',
+                      '--plane-opacity': 0,
+                      duration: .375,
+                      onComplete() {
+                          setTimeout(() => {
+                              button.removeAttribute('style')
+                              fromTo(button, {
+                                  opacity: 0,
+                                  y: -8
+                              }, {
+                                  opacity: 1,
+                                  y: 0,
+                                  clearProps: true,
+                                  duration: .3,
+                                  onComplete() {
+                                      button.classList.remove('active')
+                                  }
+                              })
+                          }, 2500)
+                      }
+                  }]
+              })
+
+              to(button, {
+                  keyframes: [{
+                      '--text-opacity': 0,
+                      '--border-radius': '0px',
+                      '--left-wing-background': getVar('--primary-dark'),
+                      '--right-wing-background': getVar('--primary-dark'),
+                      duration: .1
+                  }, {
+                      '--left-wing-background': getVar('--primary'),
+                      '--right-wing-background': getVar('--primary'),
+                      duration: .15
+                  }, {
+                      '--left-body-background': getVar('--primary-dark'),
+                      '--right-body-background': getVar('--primary-darkest'),
+                      duration: .25,
+                      delay: .1
+                  }, {
+                      '--trails-stroke': '171px',
+                      duration: .22,
+                      delay: .22
+                  }, {
+                      '--success-opacity': 1,
+                      '--success-x': '0px',
+                      duration: .2,
+                      delay: .15
+                  }, {
+                      '--success-stroke': '0px',
+                      duration: .15
+                  }]
+              })
+
+          }
+
+      })
+
+    })
 
   })
 
@@ -588,7 +766,7 @@ export default function Home() {
                             </div>
                         </a>
                     </div>
-                    <div ref={navTrigger} class="cursor-pointer border-dashed border border-color-[currentColor] rounded-[3vw] justify-center items-center w-[3.8rem] h-[2.4rem] p-[12px] flex max-w-full nav_trigger">
+                    <div data-lenis-toggle="" ref={navTrigger} class="cursor-pointer border-dashed border border-color-[currentColor] rounded-[3vw] justify-center items-center w-[3.8rem] h-[2.4rem] p-[12px] flex max-w-full nav_trigger">
                         <div class="gap-x-[.3rem] gap-y-[.3rem] flex flex-col justify-between nav_trigger-inner">
                             <div class="w-[1.7rem] h-[2px] bg-secondary-900 nav_line is-top"></div>
                             <div class="w-[1.7rem] h-[2px] bg-secondary-900 nav_line is-bottom"></div>
@@ -734,7 +912,7 @@ export default function Home() {
                 {/* Top section with two divs */}
                 <div className="flex flex-col md:flex-row mb-4 h-1/2">
                   <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex-1 rounded-lg min-h-[200px]">
-                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/jennifer-schmidt-unsplash-small.jpg"/>
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={jennifer} />
                   </div>
                   <div className="border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
                     <p className="text-base font-900 text-secondary-900">FEATURED</p>
@@ -749,7 +927,7 @@ export default function Home() {
                 {/* Bottom section with one div */}
                 <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg min-h-[200px]">
                   {/* Placeholder for image */}
-                  <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/lily-banse-YHS-unsplash-small.jpg"/>
+                  <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={lily} />
                 </div>
               </div>
 
@@ -833,7 +1011,7 @@ export default function Home() {
           <div className="w-full mx-auto p-4">
             <div className="flex flex-col md:flex-row h-auto md:h-[95vh]">
               <div className="w-full md:w-1/2 mt-4 md:mt-0 border border-dashed border-secondary-900 flex flex-col justify-center items-center text-center rounded-lg relative min-h-[200px]">
-                <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/sport01.jpg"/>
+                <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={sport01} />
               </div>
               <div className="w-full md:w-1/2 flex flex-col mt-4 md:mt-0 md:ml-4">
                 <div className="flex flex-col md:flex-row mb-4 h-1/2">
@@ -845,12 +1023,12 @@ export default function Home() {
                       <br/>
                   </div>
                   <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px]">
-                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/man01.jpg"/>
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={man01} />
                   </div>
                 </div>
                 <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg">
                   <video crossorigin playsinline autoplay muted loop className="w-full h-full object-cover">
-                    <source src='/src/assets/videos/p4_smaller.mp4' type="video/mp4" />
+                    <source src='https://videos.owreco.com/videos/p4_smaller.mp4' type="video/mp4" />
                   </video>
                 </div>
               </div>
@@ -884,7 +1062,7 @@ export default function Home() {
               <div className="w-full md:w-2/5 flex flex-col mt-4 md:mt-0 md:ml-4">
                 <div className="flex flex-col md:flex-row mb-4 h-1/2">
                   <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px]">
-                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao02.jpg"/>
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={dao02}/>
                   </div>
                   <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
                     <p className="text-base font-900 text-secondary-900">FEATURED</p>
@@ -896,31 +1074,31 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg min-h-[200px]">
-                  <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao01.jpg"/>
+                  <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={dao01}/>
                 </div>
               </div>
             </div>
           </div>
           <div className="w-full mx-auto p-4 h-42">
-            <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full">
+            <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full color-[#6a5b4b]">
               <div className="flex items-center justify-between h-full">
                 <div className="flex items-center">
                   <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
                   <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(03)</span>
                 </div>
-                <span className="text-xs md:text-3xl text-secondary-900 font-800"><span class="text-9xl font-900 tracking-tighter">03</span>&nbsp;积蓄自然之力</span>
+                <span className="text-xs md:text-3xl color-[#6a5b4b] font-800"><span class="text-9xl font-900 tracking-tighter">03</span>&nbsp;积蓄自然之力</span>
               </div>
             </div>            
           </div>
           <div className="w-full mx-auto p-4">
             <div class="marquee">
               <div class="marquee-bg">
-              <div class="marquee-bg__panel is--1"></div>
-              <div class="marquee-bg__panel is--2"></div>
-              <div class="marquee-bg__panel is--3"></div>
-              <div class="marquee-bg__panel is--4"></div>
-              <div class="marquee-bg__panel is--5"></div>
-              <div class="marquee-bg__panel is--6"></div>
+              <div class="marquee-bg__panel__bottom is--1"></div>
+              <div class="marquee-bg__panel__bottom is--2"></div>
+              <div class="marquee-bg__panel__bottom is--3"></div>
+              <div class="marquee-bg__panel__bottom is--4"></div>
+              <div class="marquee-bg__panel__bottom is--5"></div>
+              <div class="marquee-bg__panel__bottom is--6"></div>
               </div>
               <div class="marquee-inner">
               <div class="marquee-panel">
@@ -953,10 +1131,10 @@ export default function Home() {
               <div className="w-full flex flex-col mt-4 md:mt-0">
                 <div className="flex flex-col md:flex-row mb-4 h-1/2">
                   <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px] z-2">
-                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao02.jpg"/>
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={s301} />
                   </div>
                   <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col flex-1 rounded-lg min-h-[200px] z-2">
-                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src="/src/assets/imgs/dao02.jpg"/>
+                    <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={s302} />
                   </div>
                 </div>
                 <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg flex flex-col items-center justify-center text-center flex-1 z-2 bg-primary-500">
@@ -970,37 +1148,68 @@ export default function Home() {
               </div>
             </div>            
           </div>
-          <div class="pointer-events-none mt-[-50vw]">
+          <div class="mt-[-50vw]">
             <div class="relative z-2 h-[50vw] relative z-2"></div>
             <div class="relative z-0 mix-blend-darken h-[31vw] pt-[5vw] pb-0 sticky bottom-0 z-0">
             <div class="w-full mx-auto p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                  <h2 className="text-sm font-900 mb-4">SERVICES</h2>
-
+                  <h2 className="text-sm font-900 mb-4">无污染生活方式</h2>
+                  <p class="text-base">知心的人养心,善良的人养德,快乐的人养颜。</p>
+                  <p class="text-base">一个全身上下充满阳光的人,注定会温暖了自己,又会温暖到别人</p>
                 </div>
 
                 <div>
-                  <h2 className="text-sm mb-4">订阅我们的消息</h2>
-                  <div className="flex items-center b-b b-black pb-2">
-                    <input
-                      type="email"
-                      placeholder="Enter your email address"
-                      className="bg-transparent w-full outline-none text-sm"
-                    />
-                    <button className="ml-2">
-                      
-                    </button>
+                  <h2 className="text-sm mb-4 ml-4">订阅我们的消息</h2>
+                  <div className="flex items-center">
+                  
+                    <form class="newsletter-form">
+                      <input type="email" placeholder="请填写您的邮箱地址" />
+                      <button>
+                          <span class="default tracking-wider">订阅</span>
+                          <span class="success">
+                              <svg viewBox="0 0 16 16">
+                                  <polyline points="3.75 9 7 12 13 5"></polyline>
+                              </svg>Done
+                          </span>
+                          <svg class="trails" viewBox="0 0 33 64">
+                              <path d="M26,4 C28,13.3333333 29,22.6666667 29,32 C29,41.3333333 28,50.6666667 26,60"></path>
+                              <path d="M6,4 C8,13.3333333 9,22.6666667 9,32 C9,41.3333333 8,50.6666667 6,60"></path>
+                          </svg>
+                          <div class="plane">
+                              <div class="left"></div>
+                              <div class="right"></div>
+                          </div>
+                      </button>
+                    </form>
                   </div>
                 </div>
 
                 <div>
-                  <h2 className="text-sm mb-4">SITEMAP</h2>
+                  <h2 className="text-sm mb-4">站内地图</h2>
                   <ul className="space-y-2">
-                    {['Index', 'Work', 'Team', 'Studio', 'Contact'].map((item) => (
-                      <li key={item} className="b-b b-dotted b-black pb-1">
-                        <a href="#" className="text-sm hover:op-70 transition-opacity">
+                    {['首页', '产品', '联系我们'].map((item) => (
+                      <li 
+                        key={item} 
+                        className="border border-secondary-800 border-b-dashed group"
+                      >
+                        <a 
+                          href="#" 
+                          className="text-sm flex items-center justify-between py-2 px-3 transition-all duration-200 ease-in-out group-hover:font-900 group-hover:text-secondary-900"
+                        >
                           {item}
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            stroke-width="2" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round" 
+                            className="w-4 h-4 transform scale-0 transition-all duration-200 ease-in-out group-hover:scale-100"
+                          >
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                          </svg>
                         </a>
                       </li>
                     ))}
