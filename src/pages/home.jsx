@@ -385,9 +385,9 @@ const initMarquees = () => {
 export default function Home() {
 
     const urlsTop = [
-      {poster: '/src/assets/imgs/s1.jpg',  url: 'https://videos.owreco.com/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
-      {poster: '/src/assets/imgs/s3.jpg',  url: 'https://videos.owreco.com/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
-      {poster: '/src/assets/imgs/s2.jpg',  url: 'https://videos.owreco.com/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
+      {poster: '/src/assets/imgs/s1.jpg',  url: 'https://videos.owreco.com/videos/p1_smaller.mp4' , title: '有机草莓', subtitle: "有机之选，甜美之选，草莓的自然味道。" },
+      {poster: '/src/assets/imgs/s3.jpg',  url: 'https://videos.owreco.com/videos/main_smaller.mp4' , title: '精选食品', subtitle: "精挑细选的有机食材，安全、美味、零负担。" },
+      {poster: '/src/assets/imgs/s2.jpg',  url: 'https://videos.owreco.com/videos/p3_smaller.mp4', title: '绿色自然', subtitle: "每一口都是大自然的恩赐，绿色健康好选择" },
     ]
   
     const [isMenuOpen, setIsMenuOpen] = createSignal(false);
