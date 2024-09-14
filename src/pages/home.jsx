@@ -837,11 +837,6 @@ export default function Home() {
         }
       });
     });
-
-    fetch("/api/visitor")
-      .then((response) => response.json())
-      .then((data) => setCount(data.count))
-      .catch((error) => console.error("Error fetching visitor count:", error));
   });
 
   return (
