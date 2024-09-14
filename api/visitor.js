@@ -12,8 +12,7 @@ async function getVisitorCount() {
   });
 
   const data = await response.json();
-  console.log(JSON.stringify(data, null, 2)); 
-  return parseInt(data.result || 0, 10); // 如果没有计数则返回 0
+  return JSON.parse(data.result).value || 0  // 如果没有计数则返回 0
 }
 
 // 增加访问者计数
@@ -36,7 +35,6 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const currentCount = await getVisitorCount();
-  
       const newCount = await incrementVisitorCount(currentCount);
 
       res.status(200).json({ count: newCount });
