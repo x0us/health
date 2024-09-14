@@ -456,7 +456,7 @@ export default function Home() {
 
   onMount(() => {
     fetch('/api/visitor')
-      .then((response) => {response.json()})
+      .then((response) => {{console.log(response.json());response.json()}})
       .then((data) => {console.log(JSON.stringify(data, null, 2));setCount(data.count)})
       .catch((error) => console.error('Error fetching visitor count:', error));
     ///////////////////////////////////////////////////////////
