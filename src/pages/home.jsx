@@ -456,8 +456,8 @@ export default function Home() {
 
   onMount(() => {
     fetch('/api/visitor')
-      .then((response) => {{console.log(response.json());response.json()}})
-      .then((data) => {console.log(JSON.stringify(data, null, 2));setCount(data.count)})
+      .then((response) => {response.json()})
+      .then((data) => {console.log(data);setCount(data.count)})
       .catch((error) => console.error('Error fetching visitor count:', error));
     ///////////////////////////////////////////////////////////
     CustomEase.create("load", "0.46, 0.03, 0, 1");
