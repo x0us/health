@@ -12,7 +12,7 @@ async function getVisitorCount() {
   });
 
   const data = await response.json();
-  console.log(response.json());
+  console.log(JSON.stringify(data, null, 2)); 
   return parseInt(data.result || 0, 10); // 如果没有计数则返回 0
 }
 
