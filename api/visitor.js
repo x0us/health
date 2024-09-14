@@ -4,7 +4,7 @@ const VISITOR_COUNT_KEY = "visitor_count"; // KV 中存储的 key
 
 // 获取当前访问者计数
 async function getVisitorCount() {
-  console.log("KV API URL:", kvApiUrl); // 调试输出
+
   const response = await fetch(`${kvApiUrl}/get/${VISITOR_COUNT_KEY}`, {
     headers: {
       Authorization: `Bearer ${kvApiToken}`,
@@ -12,6 +12,7 @@ async function getVisitorCount() {
   });
 
   const data = await response.json();
+  console.log(data.result);
   return JSON.parse(data.result).value || 0  // 如果没有计数则返回 0
 }
 
