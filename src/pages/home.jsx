@@ -454,7 +454,15 @@ export default function Home() {
   let navWrapper;
   let navTrigger;
 
-  onMount(() => {
+  onMount(async () => {
+    try {
+      const response = await fetch('/api/visitor');
+      const data = await response.json();
+      setCount(data.count);
+    } catch (error) {
+      console.error('Error fetching visitor count:', error);
+    }
+    ///////////////////////////////////////////////////////////
     CustomEase.create("load", "0.46, 0.03, 0, 1");
     lenis.stop();
     let animationElements = document.querySelectorAll("[data-loader-lottie]"),
@@ -839,6 +847,8 @@ export default function Home() {
     });
   });
 
+
+
   return (
     <>
       <div
@@ -968,7 +978,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div class="page" style="overflow-x: clip">
+      <div class="page h-full" style="overflow-x: clip">
         <div
           id="hero"
           class="z-2 flex justify-center items-center min-h-full h-full p-0 w-full relative overflow-hidden"
