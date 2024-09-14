@@ -438,6 +438,7 @@ export default function Home() {
   
     const [isMenuOpen, setIsMenuOpen] = createSignal(false);
     const [activeIndex, setActiveIndex] = createSignal(null);
+    const [count, setCount] = createSignal(0);
 
     let menuWrapper;
     let buttonRef;
@@ -745,7 +746,12 @@ export default function Home() {
 
       })
 
-    })
+    });
+
+  fetch('/api')
+    .then((response) => response.json())
+    .then((data) => setCount(data.count))
+    .catch((error) => console.error('Error fetching visitor count:', error));
 
   })
 
@@ -829,7 +835,7 @@ export default function Home() {
             </div>
         </div>
         <div class="page" style="overflow-x: clip">
-          <div id="hero" class="z-2 flex justify-center items-center min-h-100svh h-100svh lg:h-screen p-0 w-full relative overflow-hidden">
+          <div id="hero" class="z-2 flex justify-center items-center min-h-full h-full p-0 w-full relative overflow-hidden">
             <div data-load-hero="" class="flex justify-center items-center w-full h-full relative overflow-hidden transform-none">
                 <div class="text-secondary-900 w-screen h-screen absolute">
                     <div role="list" class="w-full h-full">
@@ -841,7 +847,7 @@ export default function Home() {
                                             <h5 class="text-size-base text-secondary-900 font-semibold">您是</h5>
                                         </div>
                                         <div class="hero_project-cat">
-                                            <div class="tracking-wide uppercase mb-0 text-xs font-semibold">8000 位访问者</div>
+                                            <div class="tracking-wide uppercase mb-0 text-xs font-semibold">{count()}位访问者</div>
                                         </div>
                                     </div>
                                     <div class="gap-[2vw] flex-col justify-center items-center flex">
@@ -867,7 +873,18 @@ export default function Home() {
                                                 <div class="dashes"></div>
                                             </div>
                                             <div class="w-[1.5vw] ml-2">
-                                              <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M792.797779 792.08607c71.14434-71.800279 115.542526-170.937161 115.542526-280.334733 0-109.398596-44.398186-208.534454-115.542526-280.334733-71.713298-71.222111-170.742732-115.669416-280.025695-115.669416l0 0c-109.282962 0-208.303186 44.447305-280.026718 115.669416l0 0c-71.704089 71.800279-116.111484 170.936137-116.111484 280.334733l0 0 0 0 0 0c0 109.397572 44.407396 208.534454 116.111484 280.334733 71.724555 71.78186 170.743756 116.227118 280.026718 116.227118l0 0 0 0C622.055047 908.313188 721.084481 863.868953 792.797779 792.08607L792.797779 792.08607zM829.228503 194.956204c80.8197 81.484849 130.909515 193.140858 130.909515 316.796156 0 123.634832-50.088792 235.888452-130.909515 316.795133-81.387635 80.906681-192.947454 131.043568-316.456419 131.043568-123.500778 0-235.637742-50.135864-316.447209-131.043568C115.495966 747.640812 65.416384 635.386168 65.416384 511.751337c0-123.655298 50.079582-235.310284 130.908492-316.796156C277.13332 114.049522 389.271306 63.893192 512.772085 63.893192l0 0C636.281049 63.893192 747.840868 114.049522 829.228503 194.956204L829.228503 194.956204zM434.239474 272.448112c4.551666-4.572132 10.803044-7.408737 18.210757-7.408737l0 0c3.412726 0 6.828522 0.559748 9.66308 1.717108 3.415796 1.697665 6.27082 3.39533 8.547677 5.691629l0 0 200.913892 221.054605c2.276856 2.856048 3.984754 5.130857 5.691629 8.565073 1.137916 2.855024 1.706875 6.250354 1.706875 9.68457 0 3.413749-0.568958 6.829546-1.706875 10.263761-1.706875 2.834558-3.414773 5.689582-5.691629 7.966439L470.659965 751.055584l0 0c-2.276856 2.854001-5.131881 4.552689-8.547677 5.690606-2.835581 1.137916-6.250354 2.276856-9.66308 2.276856-7.407714 0-13.659091-3.413749-18.210757-7.966439l0 0c-4.552689-4.553713-7.407714-10.82351-7.407714-18.2302 0-3.414773 0.559748-6.847965 1.697665-9.683547 1.157359-2.856048 3.433192-5.711072 5.710049-7.987928l184.401824-203.402573L434.239474 308.907489c-2.276856-2.275833-4.552689-5.131881-5.710049-7.966439-1.137916-3.433192-1.697665-6.848988-1.697665-10.262738C426.830737 283.84979 429.685761 277.000801 434.239474 272.448112L434.239474 272.448112z" fill="currentColor" ></path></svg>
+                                            <svg 
+                                              xmlns="http://www.w3.org/2000/svg" 
+                                              viewBox="0 0 24 24" 
+                                              fill="none" 
+                                              stroke="currentColor" 
+                                              stroke-width="2" 
+                                              stroke-linecap="round" 
+                                              stroke-linejoin="round" 
+                                              className="w-4 h-4"
+                                            >
+                                              <polyline points="9 18 15 12 9 6"></polyline>
+                                            </svg>
                                             </div>
                                       </a>
                                     </div>
@@ -888,7 +905,7 @@ export default function Home() {
                 <div data-load-hero-overlay="" class="z-3 opacity-0 pointer-events-none bg-black w-full h-full absolute inset-0"></div>
             </div>
           </div>
-          <div class="w-full mx-auto p-4 mt-10">
+          <div class="w-full mx-auto p-4">
             <div class="flex gap-4 mb-4 h-[40vw]">
             {urlsTop.map((item, index) => (
               <div class='flex-1 transition-all duration-300 ease-in-out relative' classList={{ "flex-grow-[2]": activeIndex() === index }}
@@ -913,8 +930,8 @@ export default function Home() {
               {/* Left side - 40% width on medium screens and above */}
               <div className="w-full md:w-2/5 flex flex-col mt-4 md:mt-0">
                 {/* Top section with two divs */}
-                <div className="flex flex-col md:flex-row mb-4 h-1/2">
-                  <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex-1 rounded-lg min-h-[200px]">
+                <div className="flex flex-row mb-4 h-1/2 gap-4">
+                  <div className="relative border border-dashed border-secondary-900 flex-1 rounded-lg min-h-[200px]">
                     <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={jennifer} />
                   </div>
                   <div className="border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
@@ -1004,8 +1021,8 @@ export default function Home() {
             <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full">
               <div className="flex items-center justify-between h-full">
                 <div className="flex items-center">
-                  <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
-                  <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(01)</span>
+                  <h2 className="hidden sm:block md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
+                  <span className="hidden sm:block text-xs font-bold border-secondary-900 ml-1 align-super">(01)</span>
                 </div>
                 <span className="text-base md:text-3xl text-secondary-900 font-800"><span class="text-9xl font-900 tracking-tighter">01</span>&nbsp;无污染生活</span>
               </div>
@@ -1041,8 +1058,8 @@ export default function Home() {
             <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full">
               <div className="flex items-center justify-between h-full">
                 <div className="flex items-center">
-                  <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
-                  <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(02)</span>
+                  <h2 className="hidden sm:block md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
+                  <span className="hidden sm:block font-bold border-secondary-900 ml-1 align-super">(02)</span>
                 </div>
                 <span className="text-base md:text-3xl text-secondary-900 font-800"><span class="text-9xl font-900 tracking-tighter">02</span>&nbsp;道法自然</span>
               </div>
@@ -1063,8 +1080,8 @@ export default function Home() {
                 </p>
               </div>
               <div className="w-full md:w-2/5 flex flex-col mt-4 md:mt-0 md:ml-4">
-                <div className="flex flex-col md:flex-row mb-4 h-1/2">
-                  <div className="relative border border-dashed border-secondary-900 mb-4 md:mb-0 md:mr-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px]">
+                <div className="flex flex-row mb-4 h-1/2 gap-4">
+                  <div className="relative border border-dashed border-secondary-900 flex flex-col items-center justify-center text-center flex-1 rounded-lg min-h-[200px]">
                     <img class="absolute inset-0 w-full h-full object-cover rounded-lg" src={dao02}/>
                   </div>
                   <div className="relative border border-dashed border-secondary-900 p-4 flex flex-col items-center justify-center text-center flex-1 rounded-lg">
@@ -1086,8 +1103,8 @@ export default function Home() {
             <div className="border border-dashed border-secondary-900 p-4 rounded-lg h-full color-[#6a5b4b]">
               <div className="flex items-center justify-between h-full">
                 <div className="flex items-center">
-                  <h2 className="text-xs md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
-                  <span className="text-xs font-bold border-secondary-900 ml-1 align-super">(03)</span>
+                  <h2 className="hidden sm:block md:text-xl font-semibold border-secondary-900 uppercase">Introductions&nbsp;</h2>
+                  <span className="hidden sm:block font-bold border-secondary-900 ml-1 align-super">(03)</span>
                 </div>
                 <span className="text-xs md:text-3xl color-[#6a5b4b] font-800"><span class="text-9xl font-900 tracking-tighter">03</span>&nbsp;积蓄自然之力</span>
               </div>
@@ -1163,7 +1180,7 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <h2 className="text-sm mb-4 ml-4">订阅我们的消息</h2>
+                  <h2 className="text-sm mb-4">订阅我们的消息</h2>
                   <div className="flex items-center">
                   
                     <form class="newsletter-form">
