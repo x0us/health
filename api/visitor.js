@@ -2,7 +2,15 @@ const kvApiUrl = process.env.KV_REST_API_URL;
 const kvApiToken = process.env.KV_REST_API_TOKEN;
 const VISITOR_COUNT_KEY = "visitor_count"; // KV 中存储的 key
 
+// 检查环境变量是否正确设置
+if (!kvApiUrl || !kvApiToken) {
+  console.error("Error: Missing environment variables. KV_REST_API_URL or KV_REST_API_TOKEN not set.");
+  throw new Error("Environment variables are not set.");
+}
+
+// 获取当前访问者计数
 async function getVisitorCount() {
+  console.log("KV API URL:", kvApiUrl); // 调试输出
   const response = await fetch(`${kvApiUrl}/get/${VISITOR_COUNT_KEY}`, {
     headers: {
       Authorization: `Bearer ${kvApiToken}`,
@@ -10,9 +18,10 @@ async function getVisitorCount() {
   });
 
   const data = await response.json();
-  return parseInt(data.result || 0, 10); // 获取计数，如果不存在则返回 0
+  return parseInt(data.result || 0, 10); // 如果没有计数则返回 0
 }
 
+// 增加访问者计数
 async function incrementVisitorCount(currentCount) {
   const newCount = currentCount + 1;
 
