@@ -454,14 +454,11 @@ export default function Home() {
   let navWrapper;
   let navTrigger;
 
-  onMount(async () => {
-    try {
-      const response = await fetch('/api/visitor');
-      const data = await response.json();
-      setCount(data.count);
-    } catch (error) {
-      console.error('Error fetching visitor count:', error);
-    }
+  onMount(() => {
+    fetch('/api/visitor')
+      .then((response) => {response.json(),console.log('this is:' + response.json())})
+      .then((data) => setCount(data.count))
+      .catch((error) => console.error('Error fetching visitor count:', error));
     ///////////////////////////////////////////////////////////
     CustomEase.create("load", "0.46, 0.03, 0, 1");
     lenis.stop();
