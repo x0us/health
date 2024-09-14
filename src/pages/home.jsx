@@ -447,6 +447,7 @@ export default function Home() {
     
     onMount(() => {
         CustomEase.create("load", "0.46, 0.03, 0, 1");
+        lenis.stop()
         let animationElements = document.querySelectorAll("[data-loader-lottie]"),animations = [];
         animationElements.forEach( (e, o) => {
           let a = lottie.loadAnimation({
@@ -895,7 +896,7 @@ export default function Home() {
               onMouseLeave={() => setActiveIndex(null)}
               >
                 <div class='border border-dashed border-secondary-900 border-1 rounded flex flex-col justify-end items-stretch absolute inset-0 overflow-hidden rounded-xl'>
-                  <video crossorigin playsinline data-poster={item.poster} className="w-full h-full object-cover">
+                  <video crossorigin="anonymous" playsinline data-poster={item.poster} className="w-full h-full object-cover">
                     <source src={item.url} type="video/mp4" />
                   </video>
                   <div class="hidden sm:absolute sm:inset-x-0 sm:bottom-0 sm:bg-gradient-to-t sm: from-black sm:to-transparent sm:h-1/5 sm:flex sm:flex-col sm:justify-end sm:p-4">
@@ -1029,7 +1030,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="relative border border-dashed border-secondary-900 h-1/2 rounded-lg">
-                  <video crossorigin playsinline autoplay muted loop className="w-full h-full object-cover">
+                  <video crossorigin="anonymous" playsinline autoplay muted loop className="w-full h-full object-cover">
                     <source src='https://videos.owreco.com/videos/p4_smaller.mp4' type="video/mp4" />
                   </video>
                 </div>
