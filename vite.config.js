@@ -1,6 +1,7 @@
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
+import vercel from 'vite-plugin-vercel';
 // import devtools from 'solid-devtools/vite';
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
     // devtools(),
     UnoCSS(),
     solidPlugin(),
+    vercel()
   ],
   server: {
     port: 3000,
