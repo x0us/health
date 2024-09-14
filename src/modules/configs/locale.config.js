@@ -1,4 +1,4 @@
-import { homeEnLocale, homeCnLocale } from './home.locale';
+import { homeEnLocale, homeCnLocale } from "./home.locale";
 
 export const enLocale = {
   ...homeEnLocale,

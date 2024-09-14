@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { createContext, useContext } from "solid-js";
+import { createStore } from "solid-js/store";
 
 const appStoreInitialState = {
   setting: {
@@ -18,15 +18,15 @@ export const createAppStoreContext = (init = appStoreInitialState) => {
     /**
      * Toggle global notifications
      */
-    toggleNotif: () => setStore('setting', 'showNotification', (prev) => !prev),
+    toggleNotif: () => setStore("setting", "showNotification", (prev) => !prev),
     /**
      * Enable global notifications
      */
-    enableNotif: () => setStore('setting', 'showNotification', true),
+    enableNotif: () => setStore("setting", "showNotification", true),
     /**
      * Disable global notifications
      */
-    disableNotif: () => setStore('setting', 'showNotification', false),
+    disableNotif: () => setStore("setting", "showNotification", false),
   };
 
   return [store, actions];
@@ -37,7 +37,7 @@ export const AppStoreContext = createContext({});
 export const useAppStore = () => {
   const context = useContext(AppStoreContext);
   if (!context) {
-    throw new Error('useAppStore: cannot find the AppStoreContext');
+    throw new Error("useAppStore: cannot find the AppStoreContext");
   }
 
   return context;

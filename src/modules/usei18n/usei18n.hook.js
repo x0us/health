@@ -1,5 +1,5 @@
-import { createContext, createSignal, useContext } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { createContext, createSignal, useContext } from "solid-js";
+import { createStore } from "solid-js/store";
 
 /**
  * template is used to replace data by name in template strings.
@@ -13,9 +13,9 @@ import { createStore } from 'solid-js/store';
  * ```
  */
 export const template = (str, data, regex = /\{\{(.+?)\}\}/g) => {
-    return Array.from(str.matchAll(regex)).reduce((acc, match) => {
-      return acc.replace(match[0], data[match[1]]);
-    }, str);
+  return Array.from(str.matchAll(regex)).reduce((acc, match) => {
+    return acc.replace(match[0], data[match[1]]);
+  }, str);
 };
 /**
  * Safely access deep values in an object via a string path seperated by `.`
@@ -39,14 +39,14 @@ export const template = (str, data, regex = /\{\{(.+?)\}\}/g) => {
  * const notFound = deepReadObject(obj, 'a.b.d', 'not found');
  * // => 'not found'
  * ```
-*/
+ */
 export const deepReadObject = (obj, path, defaultValue) => {
-    const value = path
-      .trim()
-      .split('.')
-      .reduce((a, b) => (a ? a[b] : undefined), obj);
-  
-    return value !== undefined ? value : defaultValue;
+  const value = path
+    .trim()
+    .split(".")
+    .reduce((a, b) => (a ? a[b] : undefined), obj);
+
+  return value !== undefined ? value : defaultValue;
 };
 
 /**
@@ -56,7 +56,10 @@ export const deepReadObject = (obj, path, defaultValue) => {
  * @param [init={}] {Record<string, Record<string, any>>} - Initial dictionary of languages
  * @param [lang=navigator.language] {string} - The default language fallback to browser language if not set
  */
-export const createI18nContext = (init = {}, lang = navigator.language in init ? navigator.language : Object.keys(init)[0]) => {
+export const createI18nContext = (
+  init = {},
+  lang = navigator.language in init ? navigator.language : Object.keys(init)[0],
+) => {
   const [locale, setLocale] = createSignal(lang);
   const [dict, setDict] = createStore(init);
 
@@ -92,8 +95,8 @@ export const createI18nContext = (init = {}, lang = navigator.language in init ?
 
     const val = deepReadObject(dict[locale()], key);
 
-    if (typeof val === 'function') return val(params);
-    if (typeof val === 'string') return template(val, params || {});
+    if (typeof val === "function") return val(params);
+    if (typeof val === "string") return template(val, params || {});
 
     return val;
   };
@@ -149,7 +152,7 @@ export const I18nContext = createContext({});
 export const useI18n = () => {
   const context = useContext(I18nContext);
   if (!context) {
-    throw new Error('useI18n: cannot find the I18nContext');
+    throw new Error("useI18n: cannot find the I18nContext");
   }
 
   return context;

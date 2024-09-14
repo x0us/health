@@ -1,4 +1,4 @@
-import { ErrorBoundary, onMount } from 'solid-js';
+import { ErrorBoundary, onMount } from "solid-js";
 
 const Fallback = (props) => {
   onMount(() => {
@@ -19,7 +19,9 @@ const Fallback = (props) => {
 };
 
 const AppErrorBoundary = (props) => (
-  <ErrorBoundary fallback={(err, reset) => <Fallback err={err} reset={reset} />}>
+  <ErrorBoundary
+    fallback={(err, reset) => <Fallback err={err} reset={reset} />}
+  >
     {props.children}
   </ErrorBoundary>
 );

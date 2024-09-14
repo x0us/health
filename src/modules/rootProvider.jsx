@@ -1,7 +1,10 @@
-import { localeDict } from './configs/locale.config';
-import { AppStoreContext, createAppStoreContext } from './store/useAppStore.hook';
-import { I18nContext, createI18nContext } from './usei18n/usei18n.hook';
-import { QueryClient, QueryClientProvider } from '@tanstack/solid-query';
+import { localeDict } from "./configs/locale.config";
+import {
+  AppStoreContext,
+  createAppStoreContext,
+} from "./store/useAppStore.hook";
+import { I18nContext, createI18nContext } from "./usei18n/usei18n.hook";
+import { QueryClient, QueryClientProvider } from "@tanstack/solid-query";
 
 // #region PROVIDERS
 
@@ -17,25 +20,31 @@ export const queryClient = new QueryClient({
 export const AppStoreProvider = (props) => {
   const value = createAppStoreContext(props.store);
 
-  return <AppStoreContext.Provider value={value}>{props.children}</AppStoreContext.Provider>;
+  return (
+    <AppStoreContext.Provider value={value}>
+      {props.children}
+    </AppStoreContext.Provider>
+  );
 };
 
 export const I18nProvider = (props) => {
   const value = createI18nContext(props.dict, props.locale);
 
-  return <I18nContext.Provider value={value}>{props.children}</I18nContext.Provider>;
+  return (
+    <I18nContext.Provider value={value}>{props.children}</I18nContext.Provider>
+  );
 };
 
 export const QueryProvider = (props) => (
-  <QueryClientProvider client={queryClient}>{props.children}</QueryClientProvider>
+  <QueryClientProvider client={queryClient}>
+    {props.children}
+  </QueryClientProvider>
 );
 
 export const RootProvider = (props) => (
   <AppStoreProvider>
     <I18nProvider dict={localeDict}>
-      <QueryProvider>
-        {props.children}
-      </QueryProvider>
+      <QueryProvider>{props.children}</QueryProvider>
     </I18nProvider>
   </AppStoreProvider>
 );
